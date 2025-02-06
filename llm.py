@@ -15,20 +15,23 @@ if not API_KEY or not API_ENDPOINT:
     raise Exception("API_KEY oder API_ENDPOINT sind nicht gesetzt. Überprüfen Sie die .env.")
 
 
-def send_prompt(prompt):
+def send_prompt(nb1: str, nb2: str):
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {API_KEY}"
     }
 
+    # "Given a Jupyter notebook with exercises and solutions, which of the following two notebooks should get the higher grade? Output ONLY 'Notebook A' or 'Notebook B' and nothing else!"
+    systemprompt = """You are provided with two Jupyter notebooks (Notebook A and Notebook B), each containing exercises with their solutions. Evaluate only the correctness and accuracy of the solutions—ignore code style, formatting, documentation, or any other factors. Determine which notebook contains more correct solutions and output ONLY "Notebook A" or "Notebook B"."""
+
     data = {
-        "model": "deepseek-r1", # "llama-3.3-70b-instruct"
+        "model": "llama-3.3-70b-instruct", # "deepseek-r1",
         "messages": [
-            {"role": "system", "content": "You are a helpful AI assistant."},
-            {"role": "user", "content": prompt}
+            {"role": "system", "content": systemprompt},
+            {"role": "user", "content": f"Notebook A: {nb1}\n\n\nNotebook B: {nb2}"}
         ],
-        "max_tokens": 100,
-        "temperature": 0.7,
+        "max_tokens": 10,
+        "temperature": 0.2,
     }
 
     response = requests.post(API_ENDPOINT, headers=headers, json=data)
