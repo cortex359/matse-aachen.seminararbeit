@@ -18,7 +18,7 @@ if not API_KEY or not API_ENDPOINT:
     raise Exception("API_KEY oder API_ENDPOINT sind nicht gesetzt. Überprüfen Sie die .env.")
 
 
-def send_prompt(nb1: str, nb2: str, systemprompt: str, max_retries: int = 10):
+def send_prompt(nb1: str, nb2: str, systemprompt: str = None, max_retries: int = 10):
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {API_KEY}"
@@ -29,13 +29,13 @@ def send_prompt(nb1: str, nb2: str, systemprompt: str, max_retries: int = 10):
         systemprompt = """You are provided with two Jupyter notebooks (Notebook A and Notebook B), each containing exercises with their solutions. Evaluate only the correctness and accuracy of the solutions—ignore code style, formatting, documentation, or any other factors. Determine which notebook contains more correct solutions and output ONLY "Notebook A" or "Notebook B"."""
 
     data = {
-        "model": "llama-3.3-70b-instruct", # "qwen2.5-coder-32b-instruct", # "llama3.1:8b", # "gemma2:latest", # "phi3:latest", # "llama-3.3-70b-instruct", # "deepseek-r1",
+        "model": "deepseek-r1-distill-llama-70b", # "llama-3.3-70b-instruct", # "qwen2.5-coder-32b-instruct", # "llama3.1:8b", # "gemma2:latest", # "phi3:latest", # "llama-3.3-70b-instruct", # "deepseek-r1",
         "messages": [
             {"role": "system", "content": systemprompt},
             {"role": "user", "content": f"Notebook A: {nb1}\n\n\nNotebook B: {nb2}"}
         ],
-        "max_tokens": 100,
-        "temperature": 0.2,
+        "max_tokens": 5000,
+        "temperature": 0.1,
     }
 
     for attempt in range(1, max_retries + 1):
@@ -79,10 +79,11 @@ def sort_function(d1, d2, dataset: dict, systemprompt: str, retry=4) -> bool:
     if response:
         if "choices" in response and len(response["choices"]) > 0:
             msg = response["choices"][0]["message"]["content"].strip()
-            if msg == "Notebook A":
+            print(msg)
+            if msg.endswith("Notebook A"):
                 print(f"{d1} > {d2}")
                 return False
-            elif msg == "Notebook B":
+            elif msg.endswith("Notebook B"):
                 print(f"{d1} < {d2}")
                 return True
             else:
