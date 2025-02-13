@@ -29,12 +29,12 @@ def send_prompt(nb1: str, nb2: str, systemprompt: str = None, max_retries: int =
         systemprompt = """You are provided with two Jupyter notebooks (Notebook A and Notebook B), each containing exercises with their solutions. Evaluate only the correctness and accuracy of the solutions—ignore code style, formatting, documentation, or any other factors. Determine which notebook contains more correct solutions and output ONLY "Notebook A" or "Notebook B"."""
 
     data = {
-        "model": "deepseek-r1-distill-llama-70b", # "llama-3.3-70b-instruct", # "qwen2.5-coder-32b-instruct", # "llama3.1:8b", # "gemma2:latest", # "phi3:latest", # "llama-3.3-70b-instruct", # "deepseek-r1",
+        "model": "gemma2:latest", #"deepseek-r1-distill-llama-70b", # "llama-3.3-70b-instruct", # "qwen2.5-coder-32b-instruct", # "llama3.1:8b", # "gemma2:latest", # "phi3:latest", # "llama-3.3-70b-instruct", # "deepseek-r1",
         "messages": [
             {"role": "system", "content": systemprompt},
             {"role": "user", "content": f"Notebook A: {nb1}\n\n\nNotebook B: {nb2}"}
         ],
-        "max_tokens": 5000,
+        "max_tokens": 100,
         "temperature": 0.1,
     }
 
@@ -71,7 +71,7 @@ def send_prompt(nb1: str, nb2: str, systemprompt: str = None, max_retries: int =
     return None
 
 #@lru_cache(maxsize=None)
-def sort_function(d1, d2, dataset: dict, systemprompt: str, retry=4) -> bool:
+def sort_function(d1, d2, dataset: dict, systemprompt: str, retry=10) -> bool:
     if retry == 0:
         print("Maximale Anzahl an Versuchen erreicht.")
         return False
@@ -97,7 +97,9 @@ def sort_function(d1, d2, dataset: dict, systemprompt: str, retry=4) -> bool:
         else:
             print("Unerwartetes Antwortformat:", response)
 
-    print(f"Retrying... {retry-1}")
+    wait_time = 2 ** (10-retry)
+    print(f"Retrying... {wait_time}")
+    time.sleep(wait_time)
     return sort_function(d1, d2, dataset, systemprompt, retry=retry-1)
 
 
