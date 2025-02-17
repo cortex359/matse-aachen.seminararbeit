@@ -1,4 +1,4 @@
-import configparser
+from configparser import ConfigParser
 import re
 import sys
 import os
@@ -13,19 +13,11 @@ import random
 import nbformat
 from nbconvert import MarkdownExporter
 import logging
-from logs import TerminalFormatter
+from logs import setup_logger
 
-config = configparser.ConfigParser()
+config: ConfigParser = ConfigParser()
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-
-# create console handler with a higher log level
-ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
-ch.setFormatter(TerminalFormatter())
-
-logger.addHandler(ch)
+logger = setup_logger('execute', 'execute.log', logging.DEBUG)
 
 def load_notebooks(directory: str) -> dict[str, dict]:
     data: dict[str, dict] = {}
@@ -45,6 +37,9 @@ def load_notebooks(directory: str) -> dict[str, dict]:
 
     logging.info(f"Loaded {len(data)} notebooks.")
     return data
+
+
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
