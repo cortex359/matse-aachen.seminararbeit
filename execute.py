@@ -1,4 +1,4 @@
-from configparser import ConfigParser
+import configparser
 import re
 import sys
 import os
@@ -12,12 +12,13 @@ import seaborn as sns
 import random
 import nbformat
 from nbconvert import MarkdownExporter
-import logging
-from logs import setup_logger
+import logs
+from copy import deepcopy
 
-config: ConfigParser = ConfigParser()
 
-logger = setup_logger('execute', 'execute.log', logging.DEBUG)
+config = configparser.ConfigParser()
+logging = logs.setup()
+
 
 def load_notebooks(directory: str) -> dict[str, dict]:
     data: dict[str, dict] = {}
@@ -42,7 +43,11 @@ def load_notebooks(directory: str) -> dict[str, dict]:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
+    if len(sys.argv) <= 1:
+        logging.error("Usage: python execute.py <experiment_config>")
+        exit(1)
+
+    for i in range(1, len(sys.argv)):
         config_file = sys.argv[1]
         if os.path.isfile(config_file):
             try:
@@ -50,8 +55,8 @@ if __name__ == "__main__":
                 load_notebooks(config['Data']['data_path'] + config['Data']['exercises'])
 
             except Exception as e:
-                print(f"Error reading config file: {e}")
+                logging.error(f"Error reading config file: {e}")
                 exit(1)
         else:
-            print("Config file not found.")
+            logging.error(f"Config file '{config_file}' not found.")
             exit(1)

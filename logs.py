@@ -21,8 +21,6 @@ class TerminalFormatter(logging.Formatter):
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
-
-
 def setup_logger(name, log_file, level=logging.INFO):
     """To setup as many loggers as you want"""
     formatter = TerminalFormatter()
