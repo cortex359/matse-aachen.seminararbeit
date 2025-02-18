@@ -116,7 +116,8 @@ class PRPmodel:
                     temperature=data["temperature"]
                 )
                 logger.info(f"Response: {response}")
-                if response and response['choices'][0]['finish_reason'] == 'stop':
+                if (response and "choices" in response and len(response["choices"]) > 0
+                        and response['choices'][0]['finish_reason'] == 'stop'):
                     return response
                 else:
                     logging.error(f"Error in response: {response}.")
@@ -149,35 +150,42 @@ class PRPmodel:
         return self._send_prompt_openai(nb1, nb2, err_count)
 
 
+    def parse_response(self, response: str) -> bool:
+        if msg.endswith("Notebook A"):
+            print(f"{d1} > {d2}")
+            return False
+        elif msg.endswith("Notebook B"):
+            print(f"{d1} < {d2}")
+            return True
+
     def sort_function(self, d1, d2, err_count: int = 0) -> bool:
         if err_count == self.max_retries:
             logger.error(f"Compairing {d1} and {d2} failed after max number of retries.")
             return False
-        response = self.send_prompt(str(self.dataset[d1]), str(self.dataset[d2]))
-        if response:
-            if "choices" in response and len(response["choices"]) > 0:
-                msg = response["choices"][0]["message"]["content"].strip()
-                print(msg)
-                if msg.endswith("Notebook A"):
-                    print(f"{d1} > {d2}")
-                    return False
-                elif msg.endswith("Notebook B"):
-                    print(f"{d1} < {d2}")
-                    return True
-                else:
-                    if retry > 1:
-                        print(f"Antwort nicht eindeutig: {msg}. Retrying... {retry-1}")
-                        return sort_function(d1, d2, dataset, systemprompt, retry=retry-1)
-                    else:
-                        print(f"{d1} == {d2}")
-                        return False
-            else:
-                print("Unerwartetes Antwortformat:", response)
+        response = self.send_prompt(str(self.dataset[d1]), str(self.dataset[d2]), err_count)
+        if response and "choices" in response and len(response["choices"]) > 0:
+            msg = response["choices"][0]["message"]["content"].strip()
 
-        wait_time = 2 ** (10-retry)
-        print(f"Retrying... {wait_time}")
+            if msg.endswith("Notebook A"):
+                logger.info(f"{d1} > {d2}")
+                return False
+            elif msg.endswith("Notebook B"):
+                logger.info(f"{d1} < {d2}")
+                return True
+            else:
+                if err_count < self.max_retries:
+                    logger.warning(f"Response was not decisively. {msg=}. Retrying... {err_count}/{self.max_retries}")
+                    return self.sort_function(d1, d2, err_count=err_count+1)
+                else:
+                    logger.error(f"Compairing {d1} and {d2} failed after max number of retries. Assuming {d1} > {d2}.")
+                    return False
+        else:
+            logger.error(f"Compairing {d1} and {d2} failed. Unexpected response: {response}")
+
+        wait_time = 2 ** (err_count + 1)
+        logging.warning(f"Retrying in {wait_time} seconds... (Attempt {err_count}/{self.max_retries})")
         time.sleep(wait_time)
-        return sort_function(d1, d2, dataset, systemprompt, retry=retry-1)
+        return self.sort_function(d1, d2, err_count=err_count+1)
 
 
 if __name__ == "__main__":
@@ -185,14 +193,10 @@ if __name__ == "__main__":
 
     config: ConfigParser = ConfigParser()
     config.read("./experiments/001_llama3.3_azure.ini")
-    model = PRPmodel(config)
+    model = PRPmodel(config, {})
 
     result = model.send_prompt("Aufgabe: Sage Hallo!\nApfelkuchen ist lecker!", "Aufgabe: Sage Hallo!\nHallo!")
 
-    if result:
-        if "choices" in result and len(result["choices"]) > 0:
-            antwort = result["choices"][0]["message"]["content"].strip()
-            print("Antwort der API:")
-            print(antwort)
-        else:
-            print("Unerwartetes Antwortformat:", result)
+    antwort = result["choices"][0]["message"]["content"].strip()
+    print("Antwort der API:")
+    print(antwort)
