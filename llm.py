@@ -21,6 +21,8 @@ class PRPmodel:
 
         self.system_prompt = config['Prompting']['system_prompt']
         self.user_prompt_template = config['Prompting']['user_prompt_template']
+        self.majority_vote = config['Prompting'].getboolean('majority_vote', False)
+        self.votes = config['Prompting'].getint('votes', 1)
 
         self.model = config['Model']['model']
         self.provider = config['Model']['provider']
@@ -28,6 +30,7 @@ class PRPmodel:
         self.initial_temperature = config['Model'].getfloat('initial_temperature', 0.1)
         self.temperature_increase_on_error = config['Model'].getfloat('temperature_increase_on_error', 0.1)
         self.max_retries = config['Model'].getint('max_retries', 10)
+
 
         self.dataset = data
 
@@ -150,14 +153,6 @@ class PRPmodel:
         return self._send_prompt_openai(nb1, nb2, err_count)
 
 
-    def parse_response(self, response: str) -> bool:
-        if msg.endswith("Notebook A"):
-            print(f"{d1} > {d2}")
-            return False
-        elif msg.endswith("Notebook B"):
-            print(f"{d1} < {d2}")
-            return True
-
     def sort_function(self, d1, d2, err_count: int = 0) -> bool:
         if err_count == self.max_retries:
             logger.error(f"Compairing {d1} and {d2} failed after max number of retries.")
@@ -186,6 +181,23 @@ class PRPmodel:
         logging.warning(f"Retrying in {wait_time} seconds... (Attempt {err_count}/{self.max_retries})")
         time.sleep(wait_time)
         return self.sort_function(d1, d2, err_count=err_count+1)
+
+    def soft_function_majority_vote(self, d1, d2):
+        votes = 0
+        majority = self.votes // 2 + 1
+        for i in range(1, self.votes):
+            if self.sort_function(d1, d2):
+                votes += 1
+            else:
+                votes -= 1
+
+            # Early stopping if absolut majority is reached
+            if votes >= majority:
+                return True
+            elif votes <= -majority:
+                return False
+
+        return votes > 0
 
 
 if __name__ == "__main__":

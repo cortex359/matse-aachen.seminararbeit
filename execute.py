@@ -39,6 +39,15 @@ def load_notebooks(directory: str) -> dict[str, dict]:
     logging.info(f"Loaded {len(data)} notebooks.")
     return data
 
+def compare_expert_ranking(path: str) -> pd.DataFrame:
+    points: pd.DataFrame = pd.read_csv(path)
+
+    df = points.loc[:, ['id', 'total_points']]
+
+    df['inital_order'] = df['id'].map(lambda x: check_idxs.index(x))
+    df['llm-heapsort_rank'] = df['id'].map(lambda x: cw_data_sorted[::1].index(x))
+    df.set_index('id', inplace=True)
+
 
 
 

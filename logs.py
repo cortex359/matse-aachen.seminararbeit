@@ -30,7 +30,7 @@ def setup_logger(name, log_file, level=logging.INFO):
     console_handler.setLevel(logging.DEBUG)
     console_handler.setFormatter(formatter)
 
-    file_handler = logging.FileHandler(log_file)
+    file_handler = logging.FileHandler(f"./experiments/logs/{log_file}")
     file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
 
     logger = logging.getLogger(name)
