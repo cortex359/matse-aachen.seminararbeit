@@ -39,6 +39,10 @@ def setup_logger(name, level=logging.INFO):
 def add_file_handler(logger, log_file):
     file_handler = logging.FileHandler(f"./experiments/logs/{log_file}")
     file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
+    # replace file handler
+    for hdlr in logger.handlers[:]:  # remove all old handlers
+        if isinstance(hdlr, logging.FileHandler):
+            logger.removeHandler(hdlr)
     logger.addHandler(file_handler)
 
 global_logger: logging.Logger = setup_logger('llmsort', logging.DEBUG)

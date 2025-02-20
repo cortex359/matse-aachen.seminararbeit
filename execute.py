@@ -55,7 +55,7 @@ if __name__ == "__main__":
         exit(1)
 
     for i in range(1, len(sys.argv)):
-        config_file = sys.argv[1]
+        config_file = sys.argv[i]
         if os.path.isfile(config_file):
             try:
                 config.read(config_file)

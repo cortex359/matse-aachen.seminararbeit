@@ -184,8 +184,9 @@ class PRPmodel:
         - 'Notebook A'.
         - Notebook B.
         - **Notebook A**
+        - \boxed{Notebook A}
         """
-        pattern = r'["\'\*]?Notebook (A|B)["\'\*]?[\.\s\*]*$'
+        pattern = r'["\'\*{]?Notebook (A|B)[}"\'\*]?[\.\s\*]*$'
         match = re.search(pattern, msg, re.IGNORECASE)
         if match:
             notebook_letter = match.group(1).upper()
