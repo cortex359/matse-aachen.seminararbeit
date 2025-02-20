@@ -21,7 +21,7 @@ class TerminalFormatter(logging.Formatter):
         formatter = logging.Formatter(log_fmt)
         return formatter.format(record)
 
-def setup_logger(name, log_file, level=logging.INFO):
+def setup_logger(name, level=logging.INFO):
     """To setup as many loggers as you want"""
     formatter = TerminalFormatter()
 
@@ -30,12 +30,15 @@ def setup_logger(name, log_file, level=logging.INFO):
     console_handler.setLevel(logging.DEBUG)
     console_handler.setFormatter(formatter)
 
-    file_handler = logging.FileHandler(f"./experiments/logs/{log_file}")
-    file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
-
     logger = logging.getLogger(name)
     logger.setLevel(level)
-    logger.addHandler(file_handler)
     logger.addHandler(console_handler)
 
     return logger
+
+def add_file_handler(logger, log_file):
+    file_handler = logging.FileHandler(f"./experiments/logs/{log_file}")
+    file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
+    logger.addHandler(file_handler)
+
+global_logger: logging.Logger = setup_logger('llmsort', logging.DEBUG)

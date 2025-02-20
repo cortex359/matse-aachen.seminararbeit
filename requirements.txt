@@ -21,11 +21,14 @@ decorator==5.1.1
 defusedxml==0.7.1
 executing==2.2.0
 fastjsonschema==2.21.1
+filelock==3.17.0
 fonttools==4.55.8
 fqdn==1.5.1
+fsspec==2025.2.0
 h11==0.14.0
 httpcore==1.0.7
 httpx==0.28.1
+huggingface-hub==0.28.1
 idna==3.10
 ipykernel==6.29.5
 ipython==8.32.0
@@ -51,6 +54,7 @@ jupyterlab_pygments==0.3.0
 jupyterlab_server==2.27.3
 jupyterlab_widgets==3.0.13
 kiwisolver==1.4.8
+logging==0.4.9.6
 MarkupSafe==3.0.2
 matplotlib==3.10.0
 matplotlib-inline==0.1.7
@@ -85,10 +89,12 @@ pytz==2025.1
 PyYAML==6.0.2
 pyzmq==26.2.1
 referencing==0.36.2
+regex==2024.11.6
 requests==2.32.3
 rfc3339-validator==0.1.4
 rfc3986-validator==0.1.1
 rpds-py==0.22.3
+safetensors==0.5.2
 scipy==1.15.1
 seaborn==0.13.2
 Send2Trash==1.8.3
@@ -99,8 +105,11 @@ soupsieve==2.6
 stack-data==0.6.3
 terminado==0.18.1
 tinycss2==1.4.0
+tokenizers==0.21.0
 tornado==6.4.2
+tqdm==4.67.1
 traitlets==5.14.3
+transformers==4.48.2
 types-python-dateutil==2.9.0.20241206
 typing_extensions==4.12.2
 tzdata==2025.1
