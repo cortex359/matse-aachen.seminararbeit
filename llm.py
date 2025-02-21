@@ -118,7 +118,7 @@ class PRPmodel:
         logging.debug(f"Sending prompt: {data}")
 
         # transport needed to specify a timeout
-        transport = RequestsTransport(connection_timeout=10, read_timeout=10)
+        transport = RequestsTransport(connection_timeout=600, read_timeout=600)
 
         client = ChatCompletionsClient(
             endpoint=os.environ["AZURE_INFERENCE_SDK_ENDPOINT"],
@@ -249,7 +249,7 @@ class PRPmodel:
 
 if __name__ == "__main__":
     config: ConfigParser = ConfigParser()
-    config.read("./experiments/001_llama3.3_azure.ini")
+    config.read("experiments/vorlage_llama3.3_azure.ini")
     model = PRPmodel(config, {})
 
     result = model.send_prompt("Aufgabe: Sage Hallo!\nApfelkuchen ist lecker!", "Aufgabe: Sage Hallo!\nHallo!")
