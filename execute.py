@@ -91,6 +91,10 @@ if __name__ == "__main__":
 
         prp = PRPmodel(config, notebooks)
 
+        random_seed: int | None = config.getint('Data', 'random_seed', fallback=2797)
+        random.seed(random_seed)
+        logging.info(f'Random seed set to {random_seed}.')
+
         if config.getboolean('Data', 'shuffle_notebooks'):
             check_idxs = list(notebooks.keys())
             random.shuffle(check_idxs)
