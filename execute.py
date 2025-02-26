@@ -43,7 +43,11 @@ def compare_expert_ranking(path: str, check_idxs: list, data_sorted: list) -> pd
 
     df = points.loc[:, ['id', 'total_points']]
 
-    df['randomized'] = df['id'].map(lambda x: check_idxs.index(x))
+    if config.getboolean('Data', 'shuffle_notebooks'):
+        df['randomized'] = df['id'].map(lambda x: check_idxs.index(x))
+    else:
+        df['initial_order'] = df['id'].map(lambda x: check_idxs.index(x))
+
     df['llm'] = df['id'].map(lambda x: data_sorted[::1].index(x))
     df.set_index('id', inplace=True)
 
@@ -99,6 +103,8 @@ if __name__ == "__main__":
             check_idxs = list(notebooks.keys())
             random.shuffle(check_idxs)
             logging.info('Notebooks shuffled.')
+        elif config.get('Data', 'initial_order', fallback=None):
+            check_idxs = [s.strip().removeprefix("'").removesuffix("'") for s in config['Data']['initial_order'].split(',')]
         else:
             check_idxs = list(notebooks.keys())
 
