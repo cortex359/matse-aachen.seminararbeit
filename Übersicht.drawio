@@ -29,22 +29,22 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="RPZ442iNLAQaTXjkwzto-9" value="Pairwise Ranking Prompting" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="710" y="20" width="249.5" height="260" as="geometry" />
+          <mxGeometry x="670" y="-55" width="249.5" height="260" as="geometry" />
         </mxCell>
         <mxCell id="RPZ442iNLAQaTXjkwzto-10" value="Bewertung des Rankings" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="1100" y="-10" width="220" height="120" as="geometry" />
+          <mxGeometry x="1120" y="-90" width="220" height="120" as="geometry" />
         </mxCell>
         <mxCell id="RPZ442iNLAQaTXjkwzto-11" value="Kendall&#39;s Tau" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="1150" y="30" width="120" height="30" as="geometry" />
+          <mxGeometry x="1170" y="-50" width="120" height="30" as="geometry" />
         </mxCell>
         <mxCell id="RPZ442iNLAQaTXjkwzto-12" value="nDCG" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="1150" y="70" width="120" height="30" as="geometry" />
+          <mxGeometry x="1170" y="-10" width="120" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="o4viYqAveFwUkykEKWO6-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" parent="1" source="RPZ442iNLAQaTXjkwzto-14" target="RPZ442iNLAQaTXjkwzto-9" edge="1">
+        <mxCell id="o4viYqAveFwUkykEKWO6-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="RPZ442iNLAQaTXjkwzto-14" target="RPZ442iNLAQaTXjkwzto-9" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="RPZ442iNLAQaTXjkwzto-14" value="Prompt Templates" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="530" y="360" width="321.5" height="230" as="geometry" />
+          <mxGeometry x="634" y="300" width="321.5" height="230" as="geometry" />
         </mxCell>
         <mxCell id="yV9gDIqXhEkNf9UsOYpS-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="RPZ442iNLAQaTXjkwzto-15" target="yV9gDIqXhEkNf9UsOYpS-2" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -61,41 +61,41 @@
         <mxCell id="RPZ442iNLAQaTXjkwzto-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="RPZ442iNLAQaTXjkwzto-19" target="RPZ442iNLAQaTXjkwzto-10" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="o4viYqAveFwUkykEKWO6-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="RPZ442iNLAQaTXjkwzto-22" target="RPZ442iNLAQaTXjkwzto-9" edge="1">
+        <mxCell id="o4viYqAveFwUkykEKWO6-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="RPZ442iNLAQaTXjkwzto-22" target="RPZ442iNLAQaTXjkwzto-9" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="RPZ442iNLAQaTXjkwzto-22" value="LLMs" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="930" y="367.5" width="158.5" height="200" as="geometry" />
+          <mxGeometry x="980" y="300" width="158.5" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="RPZ442iNLAQaTXjkwzto-23" value="DeepSeek r1" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="949.25" y="477.5" width="120" height="30" as="geometry" />
+        <mxCell id="RPZ442iNLAQaTXjkwzto-23" value="DeepSeek R1" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="999.25" y="410" width="120" height="30" as="geometry" />
         </mxCell>
         <mxCell id="RPZ442iNLAQaTXjkwzto-24" value="Llama 3.2-Vision" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;" parent="1" vertex="1">
-          <mxGeometry x="948.5" y="437.5" width="120" height="30" as="geometry" />
+          <mxGeometry x="998.5" y="370" width="120" height="30" as="geometry" />
         </mxCell>
         <mxCell id="RPZ442iNLAQaTXjkwzto-25" value="Llama 3.3" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="949.25" y="397.5" width="120" height="30" as="geometry" />
+          <mxGeometry x="999.25" y="330" width="120" height="30" as="geometry" />
         </mxCell>
         <mxCell id="o4viYqAveFwUkykEKWO6-5" value="Heapsort&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;$$\mathcal{O}(2n\log_2(n))$$&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;verticalAlign=top;" parent="1" vertex="1">
-          <mxGeometry x="810" y="70" width="130" height="60" as="geometry" />
+          <mxGeometry x="770" y="-5" width="130" height="60" as="geometry" />
         </mxCell>
         <mxCell id="o4viYqAveFwUkykEKWO6-9" value="Images" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="175.64" y="-20" width="110" height="30" as="geometry" />
         </mxCell>
         <mxCell id="o4viYqAveFwUkykEKWO6-13" value="Andere Bewertungen" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="1100" y="160" width="220" height="160" as="geometry" />
+          <mxGeometry x="1120" y="80" width="220" height="160" as="geometry" />
         </mxCell>
         <mxCell id="o4viYqAveFwUkykEKWO6-14" value="Robustheit" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="1150" y="210" width="120" height="30" as="geometry" />
+          <mxGeometry x="1170" y="130" width="120" height="30" as="geometry" />
         </mxCell>
         <mxCell id="o4viYqAveFwUkykEKWO6-15" value="Transitivität" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="1150" y="250" width="120" height="30" as="geometry" />
+          <mxGeometry x="1170" y="170" width="120" height="30" as="geometry" />
         </mxCell>
         <mxCell id="o4viYqAveFwUkykEKWO6-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="o4viYqAveFwUkykEKWO6-18" target="RPZ442iNLAQaTXjkwzto-15" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="o4viYqAveFwUkykEKWO6-22" value="Phi 3" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="948.5" y="517.5" width="120" height="30" as="geometry" />
+          <mxGeometry x="998.5" y="450" width="120" height="30" as="geometry" />
         </mxCell>
         <mxCell id="yV9gDIqXhEkNf9UsOYpS-1" value="Metadata" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="175.64" y="20" width="110" height="30" as="geometry" />
@@ -104,16 +104,16 @@
           <mxGeometry x="395" y="210" width="150" height="40" as="geometry" />
         </mxCell>
         <mxCell id="yV9gDIqXhEkNf9UsOYpS-6" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Vergleiche die Lösungen der Aufgaben:&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;[Aufgaben]&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;- [Lösungen A]&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;- [Lösungen B]&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" parent="1" vertex="1">
-          <mxGeometry x="550" y="482.5" width="120" height="85" as="geometry" />
+          <mxGeometry x="654" y="422.5" width="120" height="85" as="geometry" />
         </mxCell>
         <mxCell id="yV9gDIqXhEkNf9UsOYpS-7" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Vergleiche die Abgaben:&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;- [Abgabe A]&lt;/span&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;- [Abgabe B]&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;" parent="1" vertex="1">
-          <mxGeometry x="707" y="517.5" width="120" height="50" as="geometry" />
+          <mxGeometry x="811" y="457.5" width="120" height="50" as="geometry" />
         </mxCell>
         <mxCell id="yV9gDIqXhEkNf9UsOYpS-10" value="Quicksort&lt;div&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;$$\mathcal{O}(1.39n\log_2(n))$$&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=1;verticalAlign=top;" parent="1" vertex="1">
-          <mxGeometry x="811.5" y="140" width="128.5" height="60" as="geometry" />
+          <mxGeometry x="771.5" y="65" width="128.5" height="60" as="geometry" />
         </mxCell>
         <mxCell id="yV9gDIqXhEkNf9UsOYpS-11" value="" style="group" parent="1" vertex="1" connectable="0">
-          <mxGeometry x="1150" y="-150" width="120" height="80" as="geometry" />
+          <mxGeometry x="1170" y="-220" width="120" height="80" as="geometry" />
         </mxCell>
         <mxCell id="RPZ442iNLAQaTXjkwzto-19" value="Expert Ranking" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;glass=0;shadow=1;" parent="yV9gDIqXhEkNf9UsOYpS-11" vertex="1">
           <mxGeometry width="120" height="80" as="geometry" />
@@ -140,7 +140,7 @@
           <mxGeometry x="42.56999999999999" y="45" width="34.87" height="40" as="geometry" />
         </mxCell>
         <mxCell id="yV9gDIqXhEkNf9UsOYpS-14" value="&lt;div style=&quot;font-size: 10px;&quot;&gt;&lt;span style=&quot;background-color: initial; font-size: 10px;&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot;&gt;Given a jupyter notebook with exercises and solutions, which of the following two notebooks is besser? Output ONLY &#39;Notebook A&#39; or &#39;Notebook B&#39; and nothing else!&quot;&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fontSize=10;" parent="1" vertex="1">
-          <mxGeometry x="550" y="400" width="220" height="60" as="geometry" />
+          <mxGeometry x="654" y="340" width="220" height="60" as="geometry" />
         </mxCell>
         <mxCell id="m8Ad-Qzj3JP9rXIA62wO-1" value="" style="group" parent="1" vertex="1" connectable="0">
           <mxGeometry x="362.5" y="390" width="120" height="100" as="geometry" />
@@ -151,19 +151,19 @@
         <mxCell id="m8Ad-Qzj3JP9rXIA62wO-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="m8Ad-Qzj3JP9rXIA62wO-2" target="RPZ442iNLAQaTXjkwzto-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="RIOxnfL2hCdh181jWbsz-4" value="nbconvert" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+        <mxCell id="RIOxnfL2hCdh181jWbsz-4" value="nbconvert" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="380" y="15" width="180" height="185" as="geometry" />
         </mxCell>
-        <mxCell id="RIOxnfL2hCdh181jWbsz-3" value="Executable Script" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="RIOxnfL2hCdh181jWbsz-3" value="Executable Script" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="395" y="160" width="150" height="30" as="geometry" />
         </mxCell>
         <mxCell id="RPZ442iNLAQaTXjkwzto-6" value="Markdown" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="395" y="45" width="150" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="RIOxnfL2hCdh181jWbsz-1" value="HTML" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="RIOxnfL2hCdh181jWbsz-1" value="HTML" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="395" y="80" width="150" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="RIOxnfL2hCdh181jWbsz-2" value="reStructuredText" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="RIOxnfL2hCdh181jWbsz-2" value="reStructuredText" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="395" y="120" width="150" height="30" as="geometry" />
         </mxCell>
       </root>
