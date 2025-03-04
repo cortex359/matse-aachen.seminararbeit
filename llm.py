@@ -190,7 +190,7 @@ class PRPmodel:
         match = re.search(pattern, msg, re.IGNORECASE)
         if match:
             notebook_letter = match.group(1).upper()
-            return notebook_letter == 'A'
+            return notebook_letter == 'B'
         else:
             raise ValueError("Output does not end with a valid Notebook identifier")
 
