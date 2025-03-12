@@ -5,15 +5,18 @@ import pathlib
 import random
 import re
 import sys
+from itertools import permutations, combinations
 
 import nbformat
+import numpy as np
 import pandas as pd
 from nbformat import NotebookNode
 
+from compare import position_pairs
 from logs import add_file_handler
 from logs import global_logger as logging
 from llm import PRPmodel
-from sort import heapsort
+from sort import heapsort, quicksort, bubble_sort
 from filter import filter_images, filter_output_cells, format_markdown
 
 config = configparser.ConfigParser()
@@ -71,7 +74,7 @@ if __name__ == "__main__":
             logging.error(f"Config file '{config_file}' not found.")
             continue
 
-        # create sepearate log file for each experiment
+        # create separate log file for each experiment
         experiment_name = config_file.split("/")[-1][:-4]
         add_file_handler(logging, f'{experiment_name}.log')
         logging.info(f"Running experiment {experiment_name}.")
@@ -93,6 +96,12 @@ if __name__ == "__main__":
                 notebooks = format_markdown(notebooks)
                 logging.info('Markdown formatted.')
 
+        if config.get('Data Preprocessing', 'exclude_notebooks', fallback=None):
+            exclude_notebooks = [s.strip().removeprefix("'").removesuffix("'") for s in
+                          config['Data Preprocessing']['exclude_notebooks'].split(',')]
+            logging.info(f'Excluding notebooks: {exclude_notebooks}')
+            notebooks = {k: v for k, v in notebooks.items() if k not in exclude_notebooks}
+
         prp = PRPmodel(config, notebooks)
 
         random_seed: int | None = config.getint('Data', 'random_seed', fallback=2797)
@@ -110,17 +119,66 @@ if __name__ == "__main__":
 
         logging.info(f'Initial order of notebooks: {check_idxs}')
 
+        ### Sorting and Comparison
         logging.info(f'Starting comparison of notebooks...')
+
+        compare_function: callable = None
         if config.getboolean('Prompting', 'majority_vote'):
-            data_sorted = heapsort(check_idxs, prp.sort_function_majority_vote)
+            compare_function = prp.llm_majority_vote
         else:
-            data_sorted = heapsort(check_idxs, prp.sort_function)
+            compare_function = prp.llm_compare
 
-        logging.info(f'Sorting finished. Final order of notebooks: {data_sorted}')
+        if config.get('Sorting', 'algorithm', fallback=None):
+            algorithm_name: str = config.get('Sorting', 'algorithm')
+            algorithm: callable = None
+            if algorithm_name == 'heapsort':
+                algorithm = heapsort
+            elif algorithm_name == 'quicksort':
+                algorithm = quicksort
+            elif algorithm_name == 'bubble_sort':
+                algorithm = bubble_sort
+            else:
+                logging.error(f'Unknown sorting algorithm: {algorithm_name}')
+                exit(1)
 
-        expert_ranking_csv = config['Data']['data_path'] + config['Data']['expert_ranking']
-        df = compare_expert_ranking(expert_ranking_csv, check_idxs, data_sorted)
+            logging.info(f'Sorting notebooks with {algorithm_name} using {compare_function.__name__}.')
+            data_sorted = algorithm(check_idxs, compare_function)
+            logging.info(f'Sorting finished. Final order of notebooks: {data_sorted}')
 
-        logging.info(f'Expert ranking compared to LLM ranking:')
-        logging.info(f'df:\n{df}')
-        logging.info(df.corr(method='kendall'))
+            expert_ranking_csv = config['Data']['data_path'] + config['Data']['expert_ranking']
+            df = compare_expert_ranking(expert_ranking_csv, check_idxs, data_sorted)
+
+            # Compare expert ranking to LLM ranking
+            logging.info(f'Expert ranking compared to LLM ranking:')
+            logging.info(f'df:\n{df}')
+            logging.info(df.corr(method='kendall'))
+
+        elif config.get('Comparing', 'algorithm', fallback=None):
+            algorithm_name: str = config.get('Comparing', 'algorithm')
+            algorithm: callable = None
+            if algorithm_name == 'position_pairs':
+                algorithm = position_pairs
+            else:
+                logging.error(f'Unknown sorting algorithm: {algorithm_name}')
+                exit(1)
+
+            logging.info(f'Comparing notebook pairs with {algorithm_name} using {compare_function.__name__}.')
+
+            all_nb_pairs: list[tuple] = list(combinations(check_idxs, 2))
+            n_pairs: int = config.getint('Comparing', 'pairs', fallback=len(all_nb_pairs))
+            if config.getboolean('Data', 'shuffle_notebooks'):
+                random.shuffle(all_nb_pairs)
+
+            selected_nb_pairs: list[tuple] = all_nb_pairs[:n_pairs]
+            logging.info(f'Selected {n_pairs} of ouf {len(all_nb_pairs)} notebook pairs for comparison: {selected_nb_pairs}')
+
+            consistency_list = algorithm(selected_nb_pairs, compare_function)
+            # combine results with selected_nb_pairs
+            results = list(zip(selected_nb_pairs, consistency_list))
+            logging.info(f'Comparison results: {results}')
+            logging.info(f'Consistency list: {consistency_list}')
+            logging.info(f'Out of {len(consistency_list)} comparisons made, {sum(consistency_list)} were consistent, meaning the LLM choose one over the other independent of its appearance in the prompt.')
+
+        else:
+            logging.error('No sorting or comparing algorithm specified.')
+            exit(1)

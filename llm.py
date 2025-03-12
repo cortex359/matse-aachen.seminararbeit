@@ -195,7 +195,7 @@ class PRPmodel:
             raise ValueError("Output does not end with a valid Notebook identifier")
 
 
-    def sort_function(self, d1, d2, err_count: int = 0) -> bool:
+    def llm_compare(self, d1, d2, err_count: int = 0) -> bool:
         if err_count == self.max_retries:
             logging.error(f"Compairing {d1} and {d2} failed after max number of retries.")
             return False
@@ -209,7 +209,7 @@ class PRPmodel:
             except ValueError:
                 if err_count < self.max_retries:
                     logging.warning(f"Response was not decisively. {msg=}. Retrying... {err_count}/{self.max_retries}")
-                    return self.sort_function(d1, d2, err_count=err_count+1)
+                    return self.llm_compare(d1, d2, err_count=err_count + 1)
                 else:
                     logging.error(f"Compairing {d1} and {d2} failed after max number of retries. Assuming {d1} > {d2}.")
                     return False
@@ -219,13 +219,13 @@ class PRPmodel:
         wait_time = 2 ** (err_count + 1)
         logging.warning(f"Retrying in {wait_time} seconds... (Attempt {err_count}/{self.max_retries})")
         time.sleep(wait_time)
-        return self.sort_function(d1, d2, err_count=err_count+1)
+        return self.llm_compare(d1, d2, err_count=err_count + 1)
 
-    def sort_function_majority_vote(self, d1, d2):
+    def llm_majority_vote(self, d1, d2):
         votes = 0
         majority = self.votes // 2 + 1
         for i in range(1, self.votes + 1):
-            if self.sort_function(d1, d2):
+            if self.llm_compare(d1, d2):
                 votes += 1
             else:
                 votes -= 1
