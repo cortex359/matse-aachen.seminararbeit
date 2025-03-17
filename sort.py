@@ -176,11 +176,21 @@ if __name__ == "__main__":
         com_count += 1
         return x < y
 
+    def cmp_b(A, B):
+        #print(f"{A} < {B}") if A < B else print(f"{A} > {B}")
+        global le_count, ge_count
+        if A < B:
+            le_count += 1
+        else:
+            ge_count += 1
+
+        return A < B
+
 
     quick_count = []
     heap_count = []
 
-    for _ in range(10000):
+    for _ in range(1):
         arr = [random.randint(0, 50) for _ in range(35)]
         n = len(arr)
 
@@ -202,3 +212,23 @@ if __name__ == "__main__":
 
     print(f"Average Heapsort: {sum(heap_count) / len(heap_count)}")
     print(f"Average Quicksort: {sum(quick_count) / len(quick_count)}")
+
+    print(f'{"-" * 50}')
+
+    global le_count, ge_count
+    le_count: int = 0
+    ge_count: int = 0
+
+    cp_points = [11, 36, 26, 29, 42, 42, 35, 35, 32, 38, 38, 34, 0, 32, 5, 34, 30, 34, 25, 50, 40, 35, 35, 14, 39, 47, 31, 47, 34, 33, 40, 27, 39, 2, 31]
+    cw_points = [0, 20, 8, 13, 14, 20, 20, 19, 15, 20, 19, 6, 4, 20, 0, 18, 20, 19, 7, 20, 19, 15, 9, 2, 9, 20, 10, 20, 6, 6, 7, 9, 13, 0, 17]
+    rp_points = [0, 20, 4, 0, 12, 9, 7, 10, 7, 25, 4, 4, 0, 11, 0, 12, 6, 23, 4, 28, 6, 4, 9, 7, 17, 22, 10, 18, 4, 4, 4, 4, 15, 0, 12]
+    wr_points = [0, 3, 5, 0, 3, 8, 9, 9, 10, 2, 0, 6, 1, 5, 0, 9, 5, 7, 5, 9, 7, 0, 5, 0, 4, 10, 3, 8, 6, 7, 4, 4, 4, 4, 2]
+    iv_points = [i for i in range(1, 36)]
+
+    for points in [cp_points, cw_points, rp_points, wr_points, iv_points]:
+        for _ in range(10000):
+            random.shuffle(points)
+            heapsort(points, cmp_b)
+
+        #print(f'{le_count=}\n{ge_count=}')
+        print(ge_count/(le_count + ge_count))
