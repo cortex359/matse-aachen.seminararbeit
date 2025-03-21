@@ -79,64 +79,37 @@ def _sift_down_optimized(a, start, end, cmp):
 
 def quicksort(arr, cmp=lambda x, y: x < y):
     """
-    Quicksort-Algorithmus.
-    Sortiert die Liste a in-place.
-
+    Einfacher Quicksort-Algorithmus ohne Optimierungen.
     Parameter:
-      a   -- zu sortierende Liste
+      arr -- Zu sortierende Liste.
       cmp -- Vergleichsfunktion (Lambda), die zwei Elemente vergleicht.
              Standard: lambda x, y: x < y.
-
-    Optimierungen:
-      - Median-of-three zur Wahl des Pivot-Elements.
-      - Für kleine Teilbereiche (Länge ≤ 10) wird Insertion Sort verwendet.
     """
-    a = arr.copy()
     def _quicksort(low, high):
-        if high - low > 10:
-            mid = (low + high) // 2
-            # Median-of-three: sortiere a[low], a[mid] und a[high]
-            if cmp(a[mid], a[low]):
-                a[low], a[mid] = a[mid], a[low]
-            if cmp(a[high], a[low]):
-                a[low], a[high] = a[high], a[low]
-            if cmp(a[high], a[mid]):
-                a[mid], a[high] = a[high], a[mid]
-            pivot = a[mid]
-            # Verstecke das Pivot-Element: tausche es mit dem vorletzten Element.
-            a[mid], a[high - 1] = a[high - 1], a[mid]
-            i = low
-            j = high - 1
-            while True:
-                i += 1
-                # Solange a[i] kleiner als Pivot ist, weitergehen (mit Grenzwertprüfung)
-                while i < high and cmp(a[i], pivot):
-                    i += 1
-                j -= 1
-                # Solange a[j] größer als Pivot ist, weitergehen
-                while j > low and cmp(pivot, a[j]):
-                    j -= 1
-                if i < j:
-                    a[i], a[j] = a[j], a[i]
-                else:
-                    break
-            # Bringe das Pivot-Element an seine korrekte Stelle
-            a[i], a[high - 1] = a[high - 1], a[i]
-            _quicksort(low, i - 1)
-            _quicksort(i + 1, high)
-        else:
-            # Für kleine Bereiche: Insertion Sort
-            for i in range(low + 1, high + 1):
-                key = a[i]
-                j = i - 1
-                while j >= low and cmp(key, a[j]):
-                    a[j + 1] = a[j]
-                    j -= 1
-                a[j + 1] = key
+        if low < high:
+            # Teile die Liste in zwei Bereiche
+            pivot_index = partition(low, high)
+            # Sortiere die Bereiche links und rechts vom Pivot
+            _quicksort(low, pivot_index - 1)
+            _quicksort(pivot_index + 1, high)
 
-    if a:
-        _quicksort(0, len(a) - 1)
-        return a
+    def partition(low, high):
+        # Wähle das letzte Element als Pivot
+        pivot = arr[high]
+        i = low - 1  # Index für kleinere Elemente
+        for j in range(low, high):
+            if cmp(arr[j], pivot):  # Vergleiche mit Pivot
+                i += 1
+                # Tausche, um das kleinere Element nach vorne zu bringen
+                arr[i], arr[j] = arr[j], arr[i]
+        # Bringe das Pivot-Element an seine richtige Position
+        arr[i + 1], arr[high] = arr[high], arr[i + 1]
+        return i + 1
+
+    arr = arr.copy()  # Arbeite mit einer Kopie, um das Original nicht zu verändern
+    if arr:
+        _quicksort(0, len(arr) - 1)
+    return arr
 
 
 def bubble_sort(arr, cmp=lambda x, y: x < y):
